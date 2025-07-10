@@ -12,8 +12,8 @@ const app = express();
 // CORS Configuration
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with your frontend URL
-    methods: ["GET", "POST","PATCH", "PUT", "DELETE"],
+    origin: "https://shadisite.com", // Replace with your frontend URL
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -43,7 +43,7 @@ const adminRoutes = [
   "register",
   "sign_out",
   "user_status",
-  "viewUser"
+  "viewUser",
 ];
 
 adminRoutes.forEach((route) => {
