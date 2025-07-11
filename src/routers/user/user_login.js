@@ -26,6 +26,7 @@ router.get(
       }
 
       const { user, token, redirectPath } = req.user;
+console.log("google token------", token);
 
       // ✅ Set JWT token in cookie
       res.cookie("jwt", token, {
@@ -33,8 +34,8 @@ router.get(
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
-      // res.redirect(`https://shadisite.com`);
-      res.redirect(`http://localhost:5173/`);
+      res.redirect(`https://shadisite.com`);
+      // res.redirect(`https://localhost:7000/login-page`);
 
     } catch (error) {
       console.error("OAuth Callback Error:", error);

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+  googleId: { type: String },
   name: { type: String, required: true },
   email: { type: String, required: true }, // ✅ No unique here
   pass: { type: String }, // Not required for Google OAuth users

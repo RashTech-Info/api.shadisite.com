@@ -15,7 +15,7 @@ passport.use(
     async (req, accessToken, refreshToken, profile, done) => {
       try {
 
-        // 🔍 Find user by email + role (not just email)
+        // 🔍 Find user by email
         let user = await User.findOne({
           email: profile.emails[0].value,
         });
