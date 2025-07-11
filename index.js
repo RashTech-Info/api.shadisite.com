@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { connectDB } = require("./db/dbconnection");
+require("./config/passportConfig"); // Import Passport setup
 dotenv.config();
 
 const app = express();

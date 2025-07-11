@@ -18,35 +18,35 @@ router.post("/user_login", userLogin);
 // });
 
 // ✅ Step 2: Trigger Google OAuth
-// router.get(
-//   "/auth/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
 // // ✅ Step 3: Handle Google callback
-// router.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", { session: false }),
-//   async (req, res) => {
-//     try {
-//       if (!req.user) {
-//         return res.status(401).json({ message: "Authentication failed" });
-//       }
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { session: false }),
+  async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication failed" });
+      }
 
-//       const { user, token } = req.user;
+      const { user, token } = req.user;
 
-//       // ✅ Set JWT token in cookie
-//       res.cookie("jwt", token, {
-//         httpOnly: true,
-//         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-//       });
+      // ✅ Set JWT token in cookie
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      });
 
-//       res.redirect(`http://localhost:5173/${redirectPath}`);
-//     } catch (error) {
-//       console.error("OAuth Callback Error:", error);
-//       res.status(500).json({ message: "Internal server error" });
-//     }
-//   }
-// );
+      res.redirect(`http://localhost:5173/${redirectPath}`);
+    } catch (error) {
+      console.error("OAuth Callback Error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+);
 
 module.exports = router;
