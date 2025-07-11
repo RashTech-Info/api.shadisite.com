@@ -33,7 +33,9 @@ router.get(
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
-      res.redirect(`https://shadisite.com/${redirectPath}`);
+      // res.redirect(`https://shadisite.com`);
+      res.redirect(`http://localhost:5173/`);
+
     } catch (error) {
       console.error("OAuth Callback Error:", error);
       res.status(500).json({ message: "Internal server error" });
