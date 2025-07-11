@@ -12,7 +12,7 @@ const app = express();
 // CORS Configuration
 app.use(
   cors({
-    origin: "https://shadisite.com", // Replace with your frontend URL
+    origin:[ "https://shadisite.com", "http://localhost:5173" ], // Replace with your frontend URL
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
