@@ -2,7 +2,7 @@ let user = require("../../model/user");
 
 exports.user_profile = async (req, res) => {
   let token = req.cookies.jwt;
-
+  console.log("profile vala token-------", token);
   let data = await user.findOne({ auth_key: token });
   if (data) {
     return res.status(200).json({

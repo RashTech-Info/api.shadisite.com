@@ -37,11 +37,18 @@ exports.userLogin = async (req, res) => {
           console.log("User Logged in");
           console.log("ID is" + data._id);
 
-          const token = jwt.sign({ _id: data._id.toString() }, process.env.JWT_SECRET);
+          const token = jwt.sign(
+            { _id: data._id.toString() },
+            process.env.JWT_SECRET
+          );
+          console.log("login vala token-------", token);
+
           await user.findByIdAndUpdate({ _id: data._id }, { auth_key: token });
           res.cookie("jwt", token, {
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
             httpOnly: true,
+            secure: true,
+            sameSite: "none",
             overwrite: true,
           });
 
@@ -67,4 +74,3 @@ exports.userLogin = async (req, res) => {
     console.log(error);
   }
 };
-
