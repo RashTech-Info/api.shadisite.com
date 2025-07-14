@@ -26,7 +26,7 @@ router.get(
       }
 
       const { user, token, redirectPath } = req.user;
-console.log("google token------", token);
+      console.log("google token------", token);
 
       // ✅ Set JWT token in cookie
       res.cookie("jwt", token, {
@@ -38,7 +38,6 @@ console.log("google token------", token);
       res.redirect(`http://localhost:5173`);
 
       // res.redirect(`https://localhost:7000/login-page`);
-
     } catch (error) {
       console.error("OAuth Callback Error:", error);
       res.status(500).json({ message: "Internal server error" });

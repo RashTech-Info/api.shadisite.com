@@ -7,7 +7,7 @@ exports.Sign_Out = async (req, res) => {
   try {
     const token = req.cookies.jwt;
 
-    console.log("TK", token);
+    console.log("log out token---", token);
 
     let data = await user.findOneAndUpdate(
       { auth_key: token },
