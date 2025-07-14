@@ -45,10 +45,9 @@ exports.userLogin = async (req, res) => {
 
           await user.findByIdAndUpdate({ _id: data._id }, { auth_key: token });
           res.cookie("jwt", token, {
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
             httpOnly: false,
-            secure: true,
-            sameSite: "None",
+            secure: false,
           });
 
           return res.status(200).json({

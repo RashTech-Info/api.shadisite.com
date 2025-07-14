@@ -31,7 +31,7 @@ router.get(
       // ✅ Set JWT token in cookie
       res.cookie("jwt", token, {
         httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
       });
 
       // res.redirect(`https://shadisite.com`);
