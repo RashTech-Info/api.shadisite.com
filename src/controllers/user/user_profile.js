@@ -12,11 +12,11 @@ exports.user_profile = async (req, res) => {
       status: 200,
     });
   } else {
-    return res.status(200).json({
+    return res.status(400).json({
       data: [],
       message: "Can't view user profile",
       success: true,
-      status: 200,
+      status: 400,
     });
   }
 };
