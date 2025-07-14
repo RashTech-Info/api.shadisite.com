@@ -5,14 +5,21 @@ const User = require("../../model/user"); // if you want to validate user existe
 exports.getWeddings = async (req, res) => {
   try {
     const customUrl = req.params.customUrl;
+    const token = req.cookies.jwt;
+    const findUser = await User.findOne({ auth_key: token });
+
     console.log("Fetching weddings for user customUrl: ", customUrl);
-    
-    const weddings = await Wedding.findOne({ customUrl:customUrl  });
+
+    const weddings = await Wedding.findOne({ customUrl: customUrl });
     console.log("Weddings found:", weddings);
-    
+
+    const findUserWedding = await Wedding.findOne({ userId: findUser._id });
+
     res.status(200).json({
       success: true,
       data: weddings,
+      userWedding: findUserWedding,
+      message: "Weddings fetched successfully",
     });
   } catch (error) {
     console.error("Error fetching weddings:", error);
@@ -22,7 +29,6 @@ exports.getWeddings = async (req, res) => {
     });
   }
 };
-
 
 // Create a new wedding
 exports.createWedding = async (req, res) => {
@@ -90,11 +96,18 @@ exports.createWedding = async (req, res) => {
       residence,
       familyContactNumber: JSON.parse(familyContactNumber),
       image,
-      groomImage: req.files && req.files.groomImage ? req.files.groomImage[0].filename : "",
-      brideImage: req.files && req.files.brideImage ? req.files.brideImage[0].filename : "",
-      backgroundImage: req.files && req.files.backgroundImage
-        ? req.files.backgroundImage[0].filename
-        : "",
+      groomImage:
+        req.files && req.files.groomImage
+          ? req.files.groomImage[0].filename
+          : "",
+      brideImage:
+        req.files && req.files.brideImage
+          ? req.files.brideImage[0].filename
+          : "",
+      backgroundImage:
+        req.files && req.files.backgroundImage
+          ? req.files.backgroundImage[0].filename
+          : "",
     });
 
     await newWedding.save();
@@ -303,11 +316,10 @@ exports.addRSVP = async (req, res) => {
 // Get RSVP responses
 exports.getRSVPs = async (req, res) => {
   try {
-    const userid  = req.body.userId;
+    const userid = req.body.userId;
     console.log("Fetching RSVPs for user ID:-----------------", userid);
-    
 
-    const wedding = await Wedding.findOne({ userId: userid })
+    const wedding = await Wedding.findOne({ userId: userid });
 
     if (!wedding) {
       return res

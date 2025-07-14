@@ -28,6 +28,6 @@ router.post("/createBioData", upload.single("image"), addBioData);
 router.put("/bioDataUpdate/:id", upload.single("image"), updateBioData);
 
 // Get biodata by user ID
-router.get("/bioData/:userId", getBioDataByUserId);
+router.get("/bioData", getBioDataByUserId);
 
 module.exports = router;
