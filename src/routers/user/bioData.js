@@ -6,7 +6,7 @@ const {
   getBioDataByUserId,
 } = require("../../controllers/user/bioData");
 const multer = require("multer");
-
+let auth = require("../../../auth/userauth");
 let upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
@@ -22,12 +22,12 @@ let upload = multer({
 });
 
 // Create biodata
-router.post("/createBioData", upload.single("image"), addBioData);
+router.post("/createBioData", auth, upload.single("image"), addBioData);
 
 // Update biodata
-router.put("/bioDataUpdate/:id", upload.single("image"), updateBioData);
+router.put("/bioDataUpdate/:id", auth, upload.single("image"), updateBioData);
 
 // Get biodata by user ID
-router.get("/bioData", getBioDataByUserId);
+router.get("/bioData", auth, getBioDataByUserId);
 
 module.exports = router;
