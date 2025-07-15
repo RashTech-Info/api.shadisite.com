@@ -19,9 +19,10 @@ let upload = multer({
   }),
 });
 
-router.get("/userProfile", user_profile);
+router.get("/userProfile", auth, user_profile);
 router.put(
   "/userProfile_update",
+  auth,
   upload.single("user_image"),
   Update_user
 );

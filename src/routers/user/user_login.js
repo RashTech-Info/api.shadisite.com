@@ -31,6 +31,8 @@ router.get(
       // ✅ Set JWT token in cookie
       res.cookie("jwt", token, {
         httpOnly: true,
+        secure: true, // only send over HTTPS
+        sameSite: "None",
         maxAge: 24 * 60 * 60 * 1000, // 1 day
       });
 
