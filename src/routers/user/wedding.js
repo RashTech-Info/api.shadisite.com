@@ -23,7 +23,7 @@ router.get("/getWedding/:customUrl", getWeddings);
 router.get("/getWeddingByUserId", getWeddingsByUserId);
 router.post("/create-wedding", imageUpload, createWedding);
 router.patch("/createURL", createUrl);
-router.put("/updateWedding/:id", imageUpload, updateWedding);
+router.patch("/updateWedding/:id", imageUpload, updateWedding);
 router.post("/rsvp", addRSVP);
 router.get("/getRsvp", getRSVPs);
 module.exports = router;
