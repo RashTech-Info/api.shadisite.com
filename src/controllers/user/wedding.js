@@ -201,8 +201,6 @@ exports.updateWedding = async (req, res) => {
       rsvpDeadline,
       videoUrl,
       rsvpEnabled,
-      sitePassword,
-      customUrl,
       familyMemberName,
       residence,
       familyContactNumber,
@@ -237,8 +235,6 @@ exports.updateWedding = async (req, res) => {
       rsvpDeadline,
       videoUrl,
       rsvpEnabled: rsvpEnabled === "true",
-      sitePassword,
-      customUrl,
       residence,
     };
 
