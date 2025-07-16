@@ -5,20 +5,15 @@ const User = require("../../model/user"); // if you want to validate user existe
 exports.getWeddings = async (req, res) => {
   try {
     const customUrl = req.params.customUrl;
-    const token = req.cookies.jwt;
-    const findUser = await User.findOne({ auth_key: token });
 
     console.log("Fetching weddings for user customUrl: ", customUrl);
 
     const weddings = await Wedding.findOne({ customUrl: customUrl });
     console.log("Weddings found:", weddings);
 
-    const findUserWedding = await Wedding.findOne({ userId: findUser._id });
-
     res.status(200).json({
       success: true,
       data: weddings,
-      userWedding: findUserWedding,
       message: "Weddings fetched successfully",
     });
   } catch (error) {
@@ -26,6 +21,26 @@ exports.getWeddings = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch weddings",
+    });
+  }
+};
+
+exports.getWeddingsByUserId = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    const findUser = await User.findOne({ auth_key: token });
+    const findUserWedding = await Wedding.findOne({ userId: findUser._id });
+
+    res.status(200).json({
+      success: true,
+      data: findUserWedding,
+      message: "Weddings fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error fetching weddings by user ID:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch weddings by user ID",
     });
   }
 };

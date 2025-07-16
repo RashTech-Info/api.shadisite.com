@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getWeddings,
+  getWeddingsByUserId,
   createWedding,
   updateWedding,
   addRSVP,
@@ -18,7 +19,8 @@ const imageUpload = upload.fields([
 ]);
 
 // Get weddings
-router.get("/getWedding", getWeddings);
+router.get("/getWedding/:customUrl", getWeddings);
+router.get("/getWeddingByUserId", getWeddingsByUserId);
 router.post("/create-wedding", imageUpload, createWedding);
 router.patch("/createURL", createUrl);
 router.put("/updateWedding/:id", imageUpload, updateWedding);
