@@ -31,56 +31,68 @@ exports.getWeddingData = async (req, res) => {
 exports.addWedding = async (req, res) => {
   try {
     const {
-      userId,
       coupleDetails: coupleDetailsString,
       familyDetails: familyDetailsString,
       vendors: vendorsString,
     } = req.body;
-
-    // Parse JSON strings
-    const coupleDetails = JSON.parse(coupleDetailsString);
-    const familyDetails = JSON.parse(familyDetailsString);
-    const vendors = JSON.parse(vendorsString);
-
-    if (!userId || !coupleDetails || !familyDetails || !vendors) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Missing required fields" });
-    }
-
-    const userExists = await User.findById(userId);
-    if (!userExists) {
+    const token = req.cookies.jwt;
+    const findUser = await User.findOne({ auth_key: token });
+    const userId = findUser._id;
+    if (!findUser) {
       return res
         .status(404)
         .json({ success: false, message: "User not found" });
     }
 
-    // Attach uploaded file names to coupleDetails
-    const files = req.files;
+    // Parse optional JSON fields safely
+    let coupleDetails = null;
+    let familyDetails = null;
+    let vendors = [];
 
-    if (files.groomImage)
-      coupleDetails.groomImage = files.groomImage[0].filename || "";
-    if (files.brideImage)
-      coupleDetails.brideImage = files.brideImage[0].filename || "";
-    if (files.venueImage)
-      coupleDetails.venueImage = files.venueImage[0].filename || "";
-    if (files.bannerImage)
-      coupleDetails.bannerImage = files.bannerImage[0].filename || "";
+    try {
+      coupleDetails = coupleDetailsString
+        ? JSON.parse(coupleDetailsString)
+        : null;
+    } catch (err) {
+      console.warn("Invalid coupleDetails JSON:", err);
+    }
 
-    // Attach vendor images if available
-    if (files.vendorImages && files.vendorImages.length) {
+    try {
+      familyDetails = familyDetailsString
+        ? JSON.parse(familyDetailsString)
+        : null;
+    } catch (err) {
+      console.warn("Invalid familyDetails JSON:", err);
+    }
+
+    try {
+      vendors = vendorsString ? JSON.parse(vendorsString) : [];
+    } catch (err) {
+      console.warn("Invalid vendors JSON:", err);
+    }
+
+    // Attach uploaded files to respective fields if they exist
+    const files = req.files || {};
+
+    if (coupleDetails) {
+      coupleDetails.groomImage = files.groomImage?.[0]?.filename || null;
+      coupleDetails.brideImage = files.brideImage?.[0]?.filename || null;
+      coupleDetails.venueImage = files.venueImage?.[0]?.filename || null;
+      coupleDetails.bannerImage = files.bannerImage?.[0]?.filename || null;
+    }
+
+    // Attach vendor images
+    if (vendors?.length && files.vendorImages?.length) {
       vendors.forEach((vendor, index) => {
-        if (files.vendorImages[index]) {
-          vendor.image = files.vendorImages[index].filename;
-        }
+        vendor.image = files.vendorImages[index]?.filename || null;
       });
     }
 
     const newWedding = new Wedding({
       userId,
-      coupleDetails,
-      familyDetails,
-      vendors,
+      coupleDetails: coupleDetails || null,
+      familyDetails: familyDetails || null,
+      vendors: vendors.length ? vendors : [],
     });
 
     await newWedding.save();
@@ -121,7 +133,7 @@ exports.updateWedding = async (req, res) => {
     if (coupleDetails) {
       if (files.groomImage)
         coupleDetails.groomImage = files.groomImage[0].filename || "";
-        if (files.brideImage)
+      if (files.brideImage)
         coupleDetails.brideImage = files.brideImage[0].filename || "";
       if (files.venueImage)
         coupleDetails.venueImage = files.venueImage[0].filename || "";
