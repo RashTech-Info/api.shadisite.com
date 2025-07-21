@@ -44,6 +44,7 @@ const adminRoutes = [
   "forgetPass",
   "register",
   "sign_out",
+  "siteController",
   "user_status",
   "viewUser",
 ];
