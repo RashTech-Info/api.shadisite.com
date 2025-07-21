@@ -39,6 +39,7 @@ const adminRoutes = [
   "admin_login",
   "admin_profile_update",
   "admin_profile",
+  "blogs",
   "changepass",
   "forgetPass",
   "register",
