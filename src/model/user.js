@@ -27,7 +27,15 @@ const userSchema = new mongoose.Schema({
         day: "numeric",
       }),
   },
-
+  whoCreated: {
+    type: String,
+    enum: ["Bride", "Groom"],
+    default: null, // Default value
+  },
+  weddingDate: { type: String, default: null },
+  venue: { type: String, default: null },
+  brideName: { type: String, default: null },
+  groomName: { type: String, default: null },
   auth_key: { type: String, default: null },
   role: {
     type: String,
