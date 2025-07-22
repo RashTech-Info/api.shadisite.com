@@ -13,7 +13,7 @@ const app = express();
 // CORS Configuration
 app.use(
   cors({
-    origin:[ "https://shadisite.com", "http://localhost:5173" ], // Replace with your frontend URL
+    origin: ["https://shadisite.com", "http://localhost:5173"], // Replace with your frontend URL
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
@@ -44,7 +44,7 @@ const adminRoutes = [
   "forgetPass",
   "register",
   "sign_out",
-  "siteController",
+  // "siteController",
   "user_status",
   "viewUser",
 ];

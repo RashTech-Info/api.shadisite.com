@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
         day: "numeric",
       }),
   },
+
   auth_key: { type: String, default: null },
   role: {
     type: String,

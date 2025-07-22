@@ -135,8 +135,8 @@ const budgetSchema = new mongoose.Schema({
 // Calender task
 const scheduledTaskSchema = new mongoose.Schema({
   id: { type: Number, required: true },
-  date: { type: String,  },
-  task: { type: String,  },
+  date: { type: String },
+  task: { type: String },
   time: { type: String },
   completed: { type: Boolean, default: false },
   repeat: {
@@ -166,6 +166,11 @@ const weddingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    whoCreated: {
+      type: String,
+      enum: ["Bride", "Groom"],
+      default: null, // Default value
     },
     coupleDetails: coupleDetailsSchema,
     familyDetails: {
