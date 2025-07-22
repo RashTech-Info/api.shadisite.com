@@ -64,6 +64,7 @@ const userRoutes = [
   "userChangePass",
   "view_transaction",
   "wedding",
+  "weddingForm", // Ensure this matches the file name
   "weddingPlanner",
 ];
 
