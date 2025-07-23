@@ -9,9 +9,9 @@ exports.addFormData = async (req, res) => {
     const groomName = req.body.groomName;
     const token = req.cookies.rashjwt;
 
-    if (!whoCreated || !weddingDate || !venue || !brideName || !groomName) {
-      return res.status(400).json({ message: "All fields are required." });
-      
+    if (!whoCreated || !weddingDate || !venue || !brideName || !groomName || !token) {
+      return res.status(400).json({ message: "All fields are required. And unauthorized." });
+
     }
 
     const userFind = await userModel.findOneAndUpdate(
