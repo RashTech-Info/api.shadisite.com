@@ -9,6 +9,11 @@ exports.addFormData = async (req, res) => {
     const groomName = req.body.groomName;
     const token = req.cookies.rashjwt;
 
+    if (!whoCreated || !weddingDate || !venue || !brideName || !groomName) {
+      return res.status(400).json({ message: "All fields are required." });
+      
+    }
+
     const userFind = await userModel.findOneAndUpdate(
       { auth_key: token },
       {
