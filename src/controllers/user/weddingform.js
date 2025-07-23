@@ -7,7 +7,7 @@ exports.addFormData = async (req, res) => {
     const venue = req.body.venue;
     const brideName = req.body.brideName;
     const groomName = req.body.groomName;
-    const token = req.cookies.rashjwt;
+    const token = req.cookies.jwt;
 
     console.log("Received data in form----:", req.body);
     
