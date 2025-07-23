@@ -58,13 +58,14 @@ const userRoutes = [
   "contact_us",
   "forget_pass",
   "registration",
+  "review",
   "sign_out",
   "user_login",
   "user_profile",
   "userChangePass",
   "view_transaction",
   "wedding",
-  "weddingForm", // Ensure this matches the file name
+  "weddingForm",
   "weddingPlanner",
 ];
 
