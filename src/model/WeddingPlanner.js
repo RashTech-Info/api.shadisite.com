@@ -167,11 +167,6 @@ const weddingSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    whoCreated: {
-      type: String,
-      enum: ["Bride", "Groom"],
-      default: null, // Default value
-    },
     coupleDetails: coupleDetailsSchema,
     familyDetails: {
       groomFamily: [familyMemberSchema],
