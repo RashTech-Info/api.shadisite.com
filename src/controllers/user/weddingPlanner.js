@@ -35,6 +35,7 @@ exports.addWedding = async (req, res) => {
       familyDetails: familyDetailsString,
       vendors: vendorsString,
     } = req.body;
+    const whoCreated = req.body.whoCreated;
     const token = req.cookies.jwt;
     const findUser = await User.findOne({ auth_key: token });
     const userId = findUser._id;
@@ -90,6 +91,7 @@ exports.addWedding = async (req, res) => {
 
     const newWedding = new Wedding({
       userId,
+      whoCreated,
       coupleDetails: coupleDetails || null,
       familyDetails: familyDetails || null,
       vendors: vendors.length ? vendors : [],
