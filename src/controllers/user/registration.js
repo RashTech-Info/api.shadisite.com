@@ -59,6 +59,8 @@ exports.userRegister = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
+    console.log("New Registration id---:", savedUser._id);
+    
     await user.findByIdAndUpdate({ _id: savedUser._id }, { auth_key: token });
     // Optional: set JWT as cookie
     res.cookie("jwt", token, {
