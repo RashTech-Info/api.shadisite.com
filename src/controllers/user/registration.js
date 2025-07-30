@@ -72,13 +72,8 @@ exports.userRegister = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "User registered and logged in successfully",
-      data: {
-        id: savedUser._id,
-        name: savedUser.name,
-        email: savedUser.email,
-        role: savedUser.role,
-        token: token,
-      },
+      data: savedUser,
+      token: token,
     });
   } catch (error) {
     console.error("Error in user register API:", error);
