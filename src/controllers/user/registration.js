@@ -1,5 +1,8 @@
 const user = require("../../model/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 exports.userRegister = async (req, res) => {
   try {
     let {
@@ -14,17 +17,16 @@ exports.userRegister = async (req, res) => {
       zipCode,
     } = req.body;
 
-    // Check if an admin already exists
-    let existingAdmin = await user.findOne({ email });
-
-    if (existingAdmin) {
+    // Check if user already exists
+    let existingUser = await user.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: `This ${email} already exists.Try another email`,
+        message: `This ${email} already exists. Try another email.`,
       });
     }
 
-    // Check if password is provided and not empty
+    // Check if password is provided
     if (!password || password.trim() === "") {
       return res.status(400).json({
         success: false,
@@ -32,9 +34,11 @@ exports.userRegister = async (req, res) => {
       });
     }
 
-    let hashedPassword = await bcrypt.hash(password, 10);
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    let rec = new user({
+    // Create new user
+    const newUser = new user({
       name,
       mobile,
       email,
@@ -47,20 +51,35 @@ exports.userRegister = async (req, res) => {
       role: "User",
     });
 
-    let saved_data = await rec.save();
+    const savedUser = await newUser.save();
 
-    if (saved_data) {
-      return res.status(201).json({
-        message: "User registered successfully",
-        data: saved_data,
-        success: true,
-      });
-    } else {
-      return res.status(500).json({
-        success: false,
-        message: "User registration failed",
-      });
-    }
+    // Generate JWT token after successful registration
+    const token = jwt.sign(
+      { id: savedUser._id, email: savedUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    // Optional: set JWT as cookie
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true, // only send over HTTPS
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
+    // Respond with token and user data
+    return res.status(201).json({
+      success: true,
+      message: "User registered and logged in successfully",
+      data: {
+        id: savedUser._id,
+        name: savedUser.name,
+        email: savedUser.email,
+        role: savedUser.role,
+        token: token,
+      },
+    });
   } catch (error) {
     console.error("Error in user register API:", error);
     return res.status(500).json({
