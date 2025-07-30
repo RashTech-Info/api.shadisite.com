@@ -70,6 +70,7 @@ const bioDataSchema = new mongoose.Schema({
   userEmail: { type: String },
   userPhone: { type: String },
   template_id: { type: [String] },
+  bioDataFile: { type: String },
 });
 
 const bioDataModel = mongoose.model("biodata", bioDataSchema);
