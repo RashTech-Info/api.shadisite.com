@@ -39,11 +39,17 @@ exports.addBioData = async (req, res) => {
     data.userEmail = findUser.email;
     data.userPhone = findUser.phone;
 
-    if (req.file) {
-      data.image = req.file.filename;
+    // Store image if uploaded
+    if (req.files?.image) {
+      data.image = req.files.image[0].filename;
     }
 
-     // Ensure template_id is always an array
+    // Store bioDataFile (PDF) if uploaded
+    if (req.files?.bioDataFile) {
+      data.bioDataFile = req.files.bioDataFile[0].filename;
+    }
+
+    // Ensure template_id is always an array
     if (data.template_id) {
       data.template_id = Array.isArray(data.template_id)
         ? data.template_id
@@ -60,6 +66,7 @@ exports.addBioData = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // update biodata
 exports.updateBioData = async (req, res) => {

@@ -22,10 +22,26 @@ let upload = multer({
 });
 
 // Create biodata
-router.post("/createBioData", auth, upload.single("image"), addBioData);
+router.post(
+  "/createBioData",
+  auth,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "bioDataFile", maxCount: 1 }, // for PDF upload
+  ]),
+  addBioData
+);
 
 // Update biodata
-router.put("/bioDataUpdate/:id", auth, upload.single("image"), updateBioData);
+router.put(
+  "/bioDataUpdate/:id",
+  auth,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "bioDataFile", maxCount: 1 }, // for PDF upload
+  ]),
+  updateBioData
+);
 
 // Get biodata by user ID
 router.get("/bioData", auth, getBioDataByUserId);
