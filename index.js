@@ -41,6 +41,7 @@ const adminRoutes = [
   "admin_profile",
   "blogs",
   "changepass",
+  "category",
   "forgetPass",
   "register",
   "sign_out",

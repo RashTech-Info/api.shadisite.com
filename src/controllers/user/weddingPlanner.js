@@ -1,4 +1,5 @@
 const Wedding = require("../../model/WeddingPlanner");
+const category = require("../../model/category");
 const User = require("../../model/user"); // if you want to validate user existence
 
 // Get wedding data
@@ -89,12 +90,19 @@ exports.addWedding = async (req, res) => {
       });
     }
 
+    // Fetch all categories from DB
+    const allCategories = await category.find({});
+
+    // Extract only the name or any specific value you want
+    const categoryNames = allCategories.map(cat => cat.name); 
+
     const newWedding = new Wedding({
       userId,
       whoCreated,
       coupleDetails: coupleDetails || null,
       familyDetails: familyDetails || null,
       vendors: vendors.length ? vendors : [],
+      categories: categoryNames,
     });
 
     await newWedding.save();
