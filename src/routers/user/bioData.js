@@ -27,13 +27,13 @@ router.post(
   auth,
   upload.fields([
     { name: "image", maxCount: 1 },
-    { name: "bioDataFile", maxCount: 1 }, // for PDF upload
+    // for image upload
   ]),
   addBioData
 );
 
 // Update biodata
-router.put(
+router.patch(
   "/bioDataUpdate/:id",
   auth,
   upload.fields([

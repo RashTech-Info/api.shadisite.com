@@ -14,16 +14,24 @@ const vendorSchema = new mongoose.Schema({
   description: String,
 });
 
+const venueSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  venueAddress: String,
+  venueImage: String,
+  venueDescription: String,
+});
+
 const coupleDetailsSchema = new mongoose.Schema({
   groomName: String,
   brideName: String,
   groomImage: String,
   brideImage: String,
   weddingDate: String,
-  venue: String,
-  venueImage: String,
-  venueDescription: String,
-  venueAddress: String,
+  venue: [venueSchema],
+  // venueImage: String,
+  // venueDescription: String,
+  // venueAddress: String,
   story: String,
   storyHeading: String,
   bannerImage: String,
