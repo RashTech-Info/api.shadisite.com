@@ -64,7 +64,7 @@ exports.userRegister = async (req, res) => {
     await user.findByIdAndUpdate({ _id: savedUser._id }, { auth_key: token });
     // Optional: set JWT as cookie
     res.cookie("jwt", token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true, // only send over HTTPS
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
