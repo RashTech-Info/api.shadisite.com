@@ -220,19 +220,19 @@ exports.updateWedding = async (req, res) => {
 
     const weddingId = req.params.id;
 
-    // If customUrl is being updated, check for duplicates
-    if (customUrl) {
-      const existingWedding = await Wedding.findOne({
-        customUrl,
-        _id: { $ne: weddingId },
-      });
-      if (existingWedding) {
-        return res.status(400).json({
-          success: false,
-          message: "This URL is already taken. Please choose another.",
-        });
-      }
-    }
+    // // If customUrl is being updated, check for duplicates
+    // if (customUrl) {
+    //   const existingWedding = await Wedding.findOne({
+    //     customUrl,
+    //     _id: { $ne: weddingId },
+    //   });
+    //   if (existingWedding) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       message: "This URL is already taken. Please choose another.",
+    //     });
+    //   }
+    // }
 
     // Build update object
     const updatedFields = {
