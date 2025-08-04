@@ -55,7 +55,7 @@ exports.userRegister = async (req, res) => {
 
     // Generate JWT token after successful registration
     const token = jwt.sign(
-      { id: savedUser._id, email: savedUser.email },
+      { _id: savedUser._id, email: savedUser.email },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
