@@ -55,15 +55,16 @@ exports.userRegister = async (req, res) => {
 
     // Generate JWT token after successful registration
     const token = jwt.sign(
-      { _id: savedUser._id.toString() },
-      process.env.JWT_SECRET
+      { _id: savedUser._id.toString(), email: savedUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
     );
     console.log("New Registration id---:", savedUser._id);
 
     await user.findByIdAndUpdate({ _id: savedUser._id }, { auth_key: token });
     // Optional: set JWT as cookie
     res.cookie("jwt", token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true, // only send over HTTPS
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
