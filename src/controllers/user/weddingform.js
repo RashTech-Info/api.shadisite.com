@@ -11,10 +11,6 @@ exports.addFormData = async (req, res) => {
 
     console.log("Received data in form----:", req.body);
     
-    if (!whoCreated || !weddingDate || !venue || !brideName || !groomName || !token) {
-      return res.status(400).json({ message: "All fields are required. And unauthorized." });
-    }
-
     const userFind = await userModel.findOneAndUpdate(
       { auth_key: token },
       {
